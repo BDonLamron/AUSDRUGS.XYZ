@@ -9,10 +9,31 @@ interface EditorPanelProps {
 }
 
 const EMPTY_PRODUCT: Product = {
-  id: '', name: '', description: '', imageUrl: 'https://picsum.photos/400/400',
+  id: '', 
+  name: '', 
+  description: '', 
+  // Fix: Add missing category
+  category: 'Cannabis',
+  imageUrl: 'https://picsum.photos/400/400',
   tiers: [{ id: 't1', amount: '1g', price: 100 }],
-  vendor: { name: 'admin', rating: 5, sales: 0, trustLevel: 10, isVerified: true },
-  origin: 'USA', shipsTo: 'WorldWide', isEscrow: true, type: 'physical'
+  vendor: { 
+    name: 'admin', 
+    rating: 5, 
+    sales: 0, 
+    totalRevenue: 0,
+    trustLevel: 10, 
+    isVerified: true,
+    rank: 'Kingpin',
+    joinDate: 'Jan 2025',
+    bio: 'System Administrator',
+    feedback: [] 
+  },
+  origin: 'USA', 
+  shipsTo: 'WorldWide', 
+  isEscrow: true, 
+  // Fix: Add missing isFE
+  isFE: false,
+  type: 'physical'
 };
 
 export const EditorPanel: React.FC<EditorPanelProps> = ({ product: initialProduct, onSave, onClose }) => {

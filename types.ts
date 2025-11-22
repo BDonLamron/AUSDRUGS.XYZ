@@ -7,6 +7,23 @@ export interface PriceTier {
 
 export type Category = 'Cannabis' | 'Stimulants' | 'Psychedelics' | 'Pharmacy' | 'Digital';
 
+export type RankTier = 'Peddler' | 'Runner' | 'Dealer' | 'Supplier' | 'Kingpin' | 'Heisenberg';
+
+export interface Vendor {
+    name: string;
+    rating: number; // 0-5
+    sales: number;
+    totalRevenue: number; // New field for leaderboard
+    trustLevel: number; // 1-10
+    isVerified: boolean;
+    rank: RankTier;
+    joinDate: string;
+    bio: string;
+    feedback: { user: string; rating: number; comment: string; time: string }[];
+    pgpKey?: string;
+    isOnline?: boolean; // New feature
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -15,19 +32,18 @@ export interface Product {
   imageUrl: string;
   tiers: PriceTier[];
   // Marketplace specific fields
-  vendor: {
-    name: string;
-    rating: number; // 0-5
-    sales: number;
-    trustLevel: number; // 1-10
-    isVerified: boolean;
-  };
+  vendor: Vendor;
   origin: string;
   shipsTo: string;
   isEscrow: boolean;
   isFE: boolean; // Finalize Early
   type: 'physical' | 'digital';
   btcAddress?: string;
+  // New Features
+  isWishlisted?: boolean;
+  stealthRating?: number; // 1-10
+  views?: number;
+  stockLevel?: 'High' | 'Medium' | 'Low' | 'Critical';
 }
 
 export interface CartItem {
@@ -37,6 +53,7 @@ export interface CartItem {
   imageUrl: string;
   selectedTier: PriceTier;
   quantity: number;
+  isMixed?: boolean; // Crypto mixing
 }
 
 export interface FilterState {
@@ -46,4 +63,15 @@ export interface FilterState {
   minPrice: number;
   maxPrice: number;
   categories: Category[];
+}
+
+export type OrderStatus = 'Pending' | 'Processing' | 'Shipped' | 'Delivered';
+
+export interface Order {
+  id: string;
+  date: string;
+  items: CartItem[];
+  total: number;
+  status: OrderStatus;
+  txHash: string;
 }

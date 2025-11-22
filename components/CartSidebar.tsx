@@ -8,9 +8,10 @@ interface CartSidebarProps {
   onClose: () => void;
   cart: CartItem[];
   removeFromCart: (cartId: string) => void;
+  onCheckout: () => void; // Added prop
 }
 
-export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, cart, removeFromCart }) => {
+export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, cart, removeFromCart, onCheckout }) => {
   const total = cart.reduce((sum, item) => sum + (item.selectedTier.price * item.quantity), 0);
 
   return (
@@ -97,7 +98,11 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, cart,
                   </div>
                 </div>
 
-                <button className="w-full py-3.5 bg-cyber-accent text-black font-bold tracking-wider rounded hover:bg-white hover:shadow-neon transition-all flex items-center justify-center gap-2 group">
+                <button 
+                    onClick={onCheckout}
+                    disabled={cart.length === 0}
+                    className="w-full py-3.5 bg-cyber-accent text-black font-bold tracking-wider rounded hover:bg-white hover:shadow-neon transition-all flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                     <ShieldCheck size={18} className="group-hover:scale-110 transition-transform"/> 
                     SECURE CHECKOUT
                 </button>
