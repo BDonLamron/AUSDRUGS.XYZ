@@ -1,181 +1,42 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AUSDRUGS.XYZ - Premium Marketplace</title>
+    <title>AUSDRUGS.XYZ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
           extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              mono: ['Space Grotesk', 'monospace'],
-            },
-            cursor: {
-              crosshair: 'crosshair',
-            },
-            colors: {
-              cyber: {
-                bg: '#09090b',      // Zinc 950
-                card: '#18181b',    // Zinc 900
-                border: '#27272a',  // Zinc 800
-                text: '#e4e4e7',    // Zinc 200
-                muted: '#a1a1aa',   // Zinc 400
-                accent: '#22d3ee',  // Cyan 400
-                purple: '#d946ef',  // Fuchsia 500
-                danger: '#f43f5e',  // Rose 500
-                success: '#10b981', // Emerald 500
-                gold: '#fbbf24',    // Amber 400
-              }
-            },
-            boxShadow: {
-              'neon': '0 0 5px theme("colors.cyber.accent"), 0 0 20px theme("colors.cyber.accent")',
-              'neon-purple': '0 0 5px theme("colors.cyber.purple"), 0 0 20px theme("colors.cyber.purple")',
-              'neon-gold': '0 0 5px theme("colors.cyber.gold"), 0 0 20px theme("colors.cyber.gold")',
-            },
-            animation: {
-              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'sparkle': 'sparkle 1.5s linear infinite',
-              'glitch': 'glitch 1s linear infinite',
-              'shimmer': 'shimmer 2s linear infinite',
-              'bounce-subtle': 'bounce-subtle 2s infinite',
-            },
+            fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['Space Grotesk', 'monospace'] },
+            cursor: { crosshair: 'crosshair' },
+            colors: { cyber: { bg: '#09090b', card: '#18181b', border: '#27272a', text: '#e4e4e7', muted: '#a1a1aa', accent: '#22d3ee', purple: '#d946ef', danger: '#f43f5e', success: '#10b981', gold: '#fbbf24' } },
+            boxShadow: { 'neon': '0 0 5px #22d3ee, 0 0 20px rgba(34,211,238,0.5)', 'neon-purple': '0 0 5px #d946ef, 0 0 20px rgba(217,70,239,0.5)', 'neon-gold': '0 0 5px #fbbf24, 0 0 20px rgba(251,191,36,0.5)' },
+            animation: { 'pulse-slow': 'pulse 4s infinite', 'glitch': 'glitch 1s infinite', 'rgb-text': 'rgbFlow 4s ease infinite', 'marquee': 'marquee 10s linear infinite', 'rgb-border': 'rgbBorder 3s linear infinite' },
             keyframes: {
-              sparkle: {
-                '0%, 100%': { opacity: 0, transform: 'scale(0)' },
-                '50%': { opacity: 1, transform: 'scale(1)' },
-              },
-              glitch: {
-                '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
-                '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
-                '62%': { transform: 'translate(0,0) skew(5deg)' },
-              },
-              shimmer: {
-                '0%': { backgroundPosition: '-1000px 0' },
-                '100%': { backgroundPosition: '1000px 0' },
-              },
-              'bounce-subtle': {
-                '0%, 100%': { transform: 'translateY(-5%)' },
-                '50%': { transform: 'translateY(0)' },
-              }
+              glitch: { '0%, 100%': { transform: 'translate(0)' }, '20%': { transform: 'translate(-2px, 2px)' }, '40%': { transform: 'translate(-2px, -2px)' }, '60%': { transform: 'translate(2px, 2px)' }, '80%': { transform: 'translate(2px, -2px)' } },
+              rgbFlow: { '0%, 100%': { backgroundPosition: '0% 50%' }, '50%': { backgroundPosition: '100% 50%' } },
+              marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-100%)' } },
+              rgbBorder: { '0%': { backgroundPosition: '0% 50%' }, '100%': { backgroundPosition: '200% 50%' } }
             }
           }
         }
       }
     </script>
     <style>
-      body {
-        background-color: #09090b;
-        color: #e4e4e7;
-        cursor: crosshair;
-      }
-      
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 6px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #09090b; 
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #27272a;
-        border-radius: 3px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #22d3ee;
-      }
-
-      .glass-panel {
-        background: rgba(24, 24, 27, 0.7);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-      }
-
-      @keyframes rgbFlow {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
-
-      .animate-rgb-text {
-        background: linear-gradient(270deg, #22d3ee, #d946ef, #22d3ee, #4ade80);
-        background-size: 300% 300%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: rgbFlow 4s ease infinite;
-      }
-      
-      .gold-shimmer {
-        background: linear-gradient(to right, #fbbf24 0%, #fff 50%, #fbbf24 100%);
-        background-size: 200% auto;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: shimmer 3s linear infinite;
-      }
-
-      /* CRT Scanline Effect */
-      .scanlines {
-        background: linear-gradient(
-          to bottom,
-          rgba(255,255,255,0),
-          rgba(255,255,255,0) 50%,
-          rgba(0,0,0,0.1) 50%,
-          rgba(0,0,0,0.1)
-        );
-        background-size: 100% 4px;
-        position: fixed;
-        top: 0; 
-        left: 0;
-        right: 0; 
-        bottom: 0;
-        pointer-events: none;
-        z-index: 9998;
-      }
-
-      /* Custom Cursor Element */
-      .custom-cursor {
-        width: 20px;
-        height: 20px;
-        border: 2px solid #22d3ee;
-        border-radius: 50%;
-        position: fixed;
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        transition: width 0.2s, height 0.2s;
-        mix-blend-mode: difference;
-      }
-      
-      .custom-cursor.clicking {
-        width: 15px;
-        height: 15px;
-        background-color: #d946ef;
-      }
-
-      .input-focus-effect:focus {
-         box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
-         border-color: #22d3ee;
-      }
+      html { font-size: 16px; } @media (min-width: 1024px) { html { font-size: 18px; } } @media (min-width: 1600px) { html { font-size: 20px; } }
+      body { background-color: #09090b; color: #e4e4e7; cursor: crosshair; overflow-x: hidden; }
+      ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #09090b; } ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; } ::-webkit-scrollbar-thumb:hover { background: #22d3ee; }
+      .animate-rgb-text { background: linear-gradient(270deg, #22d3ee, #d946ef, #22d3ee, #4ade80); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+      .gold-shimmer { background: linear-gradient(to right, #fbbf24 0%, #fff 50%, #fbbf24 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 3s linear infinite; }
+      .scanlines { background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1)); background-size: 100% 4px; position: fixed; inset: 0; pointer-events: none; z-index: 9998; }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
-    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24"
-  }
-}
-</script>
+    <script type="importmap">
+    { "imports": { "react/": "https://aistudiocdn.com/react@^19.2.0/", "react": "https://aistudiocdn.com/react@^19.2.0", "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/", "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0", "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0", "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24" } }
+    </script>
 </head>
-  <body>
-    <div id="root"></div>
-    <div class="scanlines"></div>
-  </body>
+<body><div id="root"></div><div class="scanlines"></div></body>
 </html>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { X, Package, Clock, CheckCircle, Truck, Box } from 'lucide-react';
+import { X, Package, Clock, CheckCircle, Truck, Box, Flag, Star } from 'lucide-react';
 import { Order } from '../types';
 
 interface OrdersModalProps {
@@ -14,6 +14,7 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
         'Processing': 'text-blue-400 bg-blue-400/10 border-blue-400',
         'Shipped': 'text-purple-400 bg-purple-400/10 border-purple-400',
         'Delivered': 'text-green-400 bg-green-400/10 border-green-400',
+        'Disputed': 'text-red-400 bg-red-400/10 border-red-400',
     };
     
     const icons: Record<string, React.ReactNode> = {
@@ -21,6 +22,7 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
         'Processing': <Box size={12}/>,
         'Shipped': <Truck size={12}/>,
         'Delivered': <CheckCircle size={12}/>,
+        'Disputed': <Flag size={12}/>
     };
 
     return (
@@ -86,6 +88,18 @@ export const OrdersModal: React.FC<OrdersModalProps> = ({ orders, onClose }) => 
                         <div className="mt-4 pt-2 border-t border-cyber-border/50 flex justify-between items-center">
                             <span className="text-xs text-cyber-muted font-bold uppercase">Total Paid</span>
                             <span className="font-mono font-bold text-lg text-cyber-accent">${order.total}</span>
+                        </div>
+                        
+                        {/* Order Actions */}
+                        <div className="flex gap-2 mt-3 justify-end">
+                            {order.status === 'Delivered' && (
+                                <button className="text-[10px] bg-cyber-success/10 text-cyber-success border border-cyber-success rounded px-2 py-1 font-bold hover:bg-cyber-success hover:text-black transition-colors flex items-center gap-1">
+                                    <Star size={10}/> LEAVE REVIEW
+                                </button>
+                            )}
+                            <button className="text-[10px] bg-cyber-danger/10 text-cyber-danger border border-cyber-danger rounded px-2 py-1 font-bold hover:bg-cyber-danger hover:text-white transition-colors flex items-center gap-1">
+                                <Flag size={10}/> DISPUTE ORDER
+                            </button>
                         </div>
                     </div>
                 ))

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Vendor } from '../types';
-import { Trophy, TrendingUp, Medal, Crown } from 'lucide-react';
+import { Trophy, TrendingUp, Medal, Crown, Palmtree } from 'lucide-react';
 
 interface TopVendorsPanelProps {
   vendors: Vendor[];
@@ -37,6 +37,11 @@ export const TopVendorsPanel: React.FC<TopVendorsPanelProps> = ({ vendors }) => 
                             {vendor.name}
                          </span>
                          {idx === 0 && <Crown size={12} className="text-cyber-gold"/>}
+                         {vendor.isVacation && (
+                            <span title="On Vacation">
+                                <Palmtree size={12} className="text-cyber-accent ml-1" />
+                            </span>
+                         )}
                      </div>
                      <div className="flex items-center gap-1 text-[10px] text-cyber-muted">
                         <TrendingUp size={10} className="text-cyber-success"/>

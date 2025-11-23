@@ -1,13 +1,19 @@
 import React from 'react';
 import { FilterState, Category } from '../types';
-import { Search, Filter, MapPin, Globe, DollarSign } from 'lucide-react';
+import { Search, Filter, MapPin, Globe, DollarSign, Cannabis, Zap, Pill, Binary, Heart, Eye } from 'lucide-react';
 
 interface FilterPanelProps {
   filters: FilterState;
   setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
 }
 
-const CATEGORIES: Category[] = ['Cannabis', 'Stimulants', 'Psychedelics', 'Pharmacy', 'Digital'];
+const CATEGORIES: { id: Category; icon: React.ReactNode }[] = [
+    { id: 'Cannabis', icon: <Cannabis size={14}/> },
+    { id: 'Stimulants', icon: <Zap size={14}/> },
+    { id: 'Psychedelics', icon: <Eye size={14}/> },
+    { id: 'Pharmacy', icon: <Pill size={14}/> },
+    { id: 'Digital', icon: <Binary size={14}/> }
+];
 
 export const FilterPanel: React.FC<FilterPanelProps> = ({ filters, setFilters }) => {
   
@@ -25,7 +31,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ filters, setFilters })
   };
 
   return (
-    <div className="w-full bg-cyber-card border border-cyber-border p-4 rounded-lg space-y-6">
+    <div className="w-full bg-cyber-card border border-cyber-border p-4 rounded-lg space-y-6 relative z-20">
       
       <div className="flex items-center gap-2 text-cyber-accent mb-4 border-b border-cyber-border pb-2">
         <Filter size={20} />
@@ -42,9 +48,26 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ filters, setFilters })
             value={filters.search}
             onChange={(e) => handleChange('search', e.target.value)}
             placeholder="Keywords..."
-            className="w-full bg-cyber-bg border border-cyber-border rounded p-2 pl-10 text-sm text-cyber-text focus:border-cyber-accent outline-none transition-colors"
+            className="w-full bg-cyber-bg border border-cyber-border rounded p-2 pl-10 text-sm text-cyber-text focus:border-cyber-accent outline-none transition-colors input-focus-effect"
           />
         </div>
+      </div>
+
+      {/* Favorites Toggle */}
+      <div className="bg-black/30 p-2 rounded border border-cyber-border">
+          <label className="flex items-center justify-between cursor-pointer">
+              <span className="text-xs font-bold text-cyber-danger flex items-center gap-2"><Heart size={12} fill="currentColor"/> Show Wishlist Only</span>
+              <div className="relative">
+                  <input 
+                    type="checkbox" 
+                    checked={filters.showFavoritesOnly} 
+                    onChange={(e) => handleChange('showFavoritesOnly', e.target.checked)}
+                    className="sr-only"
+                  />
+                  <div className={`w-8 h-4 rounded-full transition-colors ${filters.showFavoritesOnly ? 'bg-cyber-danger' : 'bg-cyber-border'}`}></div>
+                  <div className={`absolute left-0 top-0 w-4 h-4 bg-white rounded-full transition-transform ${filters.showFavoritesOnly ? 'translate-x-full' : ''}`}></div>
+              </div>
+          </label>
       </div>
 
       {/* Origin & Destination */}
@@ -85,18 +108,18 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ filters, setFilters })
         <label className="text-xs font-bold text-cyber-muted uppercase">Category</label>
         <div className="space-y-1">
           {CATEGORIES.map(cat => (
-            <label key={cat} className="flex items-center gap-2 cursor-pointer group">
-              <div className={`w-4 h-4 border border-cyber-border rounded flex items-center justify-center transition-colors ${filters.categories.includes(cat) ? 'bg-cyber-accent border-cyber-accent' : 'group-hover:border-cyber-accent'}`}>
-                {filters.categories.includes(cat) && <div className="w-2 h-2 bg-black rounded-sm" />}
+            <label key={cat.id} className="flex items-center gap-2 cursor-pointer group hover:bg-white/5 p-1 rounded transition-colors">
+              <div className={`w-4 h-4 border border-cyber-border rounded flex items-center justify-center transition-colors ${filters.categories.includes(cat.id) ? 'bg-cyber-accent border-cyber-accent' : 'group-hover:border-cyber-accent'}`}>
+                {filters.categories.includes(cat.id) && <div className="w-2 h-2 bg-black rounded-sm" />}
               </div>
               <input 
                 type="checkbox" 
-                checked={filters.categories.includes(cat)}
-                onChange={() => handleCategoryToggle(cat)}
+                checked={filters.categories.includes(cat.id)}
+                onChange={() => handleCategoryToggle(cat.id)}
                 className="hidden" 
               />
-              <span className={`text-sm ${filters.categories.includes(cat) ? 'text-cyber-text font-bold' : 'text-cyber-muted'}`}>
-                {cat}
+              <span className={`text-sm flex items-center gap-2 ${filters.categories.includes(cat.id) ? 'text-cyber-text font-bold' : 'text-cyber-muted'}`}>
+                {cat.icon} {cat.id}
               </span>
             </label>
           ))}
